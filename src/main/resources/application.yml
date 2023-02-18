@@ -1,0 +1,19 @@
+jira:
+  url: ${JIRA_URL}
+  login: ${JIRA_LOGIN}
+  password: ${JIRA_PASSWORD}
+  project: ${JIRA_PROJECT}
+
+notion:
+  timesheetDb: ${NOTION_DB}
+  secret: ${NOTION_SECRET}
+
+feign:
+  httpclient.enabled: true
+
+logging:
+  level:
+    es.e1sordo.worklog_sync.clients:
+      JiraClient: DEBUG # Feign logging only responds to the DEBUG level
+      NotionClient: DEBUG # Feign logging only responds to the DEBUG level
+    root: INFO
