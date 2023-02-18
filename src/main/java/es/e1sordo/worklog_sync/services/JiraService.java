@@ -51,8 +51,8 @@ public class JiraService {
         }
 
         final IssueResponse issue = jiraClient.getIssue(issueKey);
-        log.info("[{}] Description: {}. Unique ID: {}, link: {}",
-                issueKey, issue.getDescription(), issue.getId(), jiraUrl + "/browse/" + issueKey);
+        log.info("[{}] Summary: {}. Unique ID: {}, link: {}",
+                issueKey, issue.getFields().getSummary(), issue.getId(), jiraUrl + "/browse/" + issueKey);
 
         var issueWorklogsPage = jiraClient.getAllWorklogs(issueKey);
         log.info("[{}] Total worklogs for this issue: {}", issueKey, issueWorklogsPage.getTotal());

@@ -11,5 +11,11 @@ public class IssueResponse {
 
     private String id;
     private String key;
-    private String description;
+    private IssueFields fields;
+
+    @Data
+    public static class IssueFields {
+
+        private String summary;
+    }
 }

@@ -29,7 +29,7 @@ public interface JiraClient {
      * @return the details of the issue
      */
     @GetMapping(
-            value = "/2/issue/{issueKey}?fields=id,key,description",
+            value = "/2/issue/{issueKey}?fields=id,key,summary",
             produces = APPLICATION_JSON_VALUE
     )
     IssueResponse getIssue(@PathVariable String issueKey);
