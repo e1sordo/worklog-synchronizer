@@ -15,7 +15,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @FeignClient(
         value = "notion-client",
-        url = "https://api.notion.com/",
+        url = "${notion.url}",
+        path = "${notion.path}",
         configuration = NotionClientConfiguration.class
 )
 public interface NotionClient {

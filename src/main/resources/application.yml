@@ -1,10 +1,13 @@
 jira:
   url: ${JIRA_URL}
+  path: /rest/api
   login: ${JIRA_LOGIN}
   password: ${JIRA_PASSWORD}
   project: ${JIRA_PROJECT}
 
 notion:
+  url: https://api.notion.com
+  path: /
   timesheetDb: ${NOTION_DB}
   secret: ${NOTION_SECRET}
 

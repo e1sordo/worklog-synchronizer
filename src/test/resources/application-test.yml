@@ -1,0 +1,12 @@
+jira:
+  url: http://localhost:9561
+  path: /jira
+  login: login
+  password: pass
+  project: PPP
+
+notion:
+  url: http://localhost:9561
+  path: /notion
+  timesheetDb: db
+  secret: secret

@@ -17,7 +17,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
  */
 @FeignClient(
         value = "jira-client",
-        url = "${jira.url}/rest/api/",
+        url = "${jira.url}",
+        path = "${jira.path}",
         configuration = JiraFeignClientConfiguration.class
 )
 public interface JiraClient {
