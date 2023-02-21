@@ -4,6 +4,7 @@ import feign.RequestInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
+import org.springframework.lang.NonNull;
 
 import java.util.List;
 
@@ -21,11 +22,13 @@ public class NotionClientConfiguration extends RetryableAndLoggedGatewaysConfigu
         };
     }
 
+    @NonNull
     @Override
     public List<String> getPrintableHeaders() {
         return List.of(AUTHORIZATION_HEADER, NOTION_VERSION_HEADER);
     }
 
+    @NonNull
     @Override
     public List<String> getSecretHeaders() {
         return List.of(AUTHORIZATION_HEADER);

@@ -3,6 +3,7 @@ package es.e1sordo.worklog_sync.clients;
 import es.e1sordo.worklog_sync.config.JiraFeignClientConfiguration;
 import es.e1sordo.worklog_sync.dto.jira.CreateWorklogRequest;
 import es.e1sordo.worklog_sync.dto.jira.IssueResponse;
+import es.e1sordo.worklog_sync.dto.jira.IssueWorklogResponse;
 import es.e1sordo.worklog_sync.dto.jira.IssueWorklogsPageResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,11 +55,12 @@ public interface JiraClient {
      *
      * @param issueKey key of the issue
      * @param request  body of the worklog to add
+     * @return added worklog
      */
     @PostMapping(
             value = "/2/issue/{issueKey}/worklog?notifyUsers=false",
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE
     )
-    void addWorklog(@PathVariable String issueKey, @RequestBody CreateWorklogRequest request);
+    IssueWorklogResponse addWorklog(@PathVariable String issueKey, @RequestBody CreateWorklogRequest request);
 }

@@ -3,15 +3,11 @@ package es.e1sordo.worklog_sync.services;
 import es.e1sordo.worklog_sync.clients.JiraClient;
 import es.e1sordo.worklog_sync.dto.jira.CreateWorklogRequest;
 import es.e1sordo.worklog_sync.dto.jira.IssueResponse;
-import es.e1sordo.worklog_sync.dto.jira.IssueWorklogResponse;
 import es.e1sordo.worklog_sync.models.WorklogToAdd;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -86,31 +82,9 @@ public class JiraService {
         );
         log.info("[{}] Worklog to create: {}", issueKey, createWorklogRequest);
 
-        jiraClient.addWorklog(issueKey, createWorklogRequest);
-        log.info("[{}] Worklog was successfully created!", issueKey);
+        var addedWorklog = jiraClient.addWorklog(issueKey, createWorklogRequest);
+        log.info("[{}] Worklog was successfully created! {}", issueKey, addedWorklog);
 
-        var issueWorklogsPageAfterUpdating = jiraClient.getAllWorklogs(issueKey);
-
-        log.info("[{}] Total worklogs for this issue after updating: {} ({} + {})", issueKey,
-                issueWorklogsPageAfterUpdating.getTotal(),
-                issueWorklogsPage.getTotal(),
-                issueWorklogsPageAfterUpdating.getTotal() - issueWorklogsPage.getTotal());
-        var onlyMyWorklogsAfterUpdating = issueWorklogsPageAfterUpdating.getWorklogsByUser(myLogin);
-
-        List<IssueWorklogResponse> newWorklogs = getUniqueWorklogs(onlyMyWorklogs, onlyMyWorklogsAfterUpdating);
-        if (newWorklogs.isEmpty()) {
-            log.warn("[{}] Something goes wrong. Worklog was saved, but fetches (before and after) are same", issueKey);
-            return null;
-        } else {
-            log.info("[{}] My NEW worklog {}", issueKey, newWorklogs.get(0));
-            return newWorklogs.get(0).getId();
-        }
-    }
-
-    private List<IssueWorklogResponse> getUniqueWorklogs(List<IssueWorklogResponse> l1,
-                                                         List<IssueWorklogResponse> l2) {
-        var uniques = new ArrayList<>(l2);
-        uniques.removeAll(l1);
-        return uniques;
+        return addedWorklog.getId();
     }
 }

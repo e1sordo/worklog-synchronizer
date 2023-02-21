@@ -24,7 +24,7 @@ ext {
 
 dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-    implementation 'io.github.openfeign:feign-httpclient'
+    implementation 'io.github.openfeign:feign-okhttp'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'

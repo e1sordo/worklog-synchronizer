@@ -11,9 +11,6 @@ notion:
   timesheetDb: ${NOTION_DB}
   secret: ${NOTION_SECRET}
 
-feign:
-  httpclient.enabled: true
-
 logging:
   level:
     es.e1sordo.worklog_sync.clients:

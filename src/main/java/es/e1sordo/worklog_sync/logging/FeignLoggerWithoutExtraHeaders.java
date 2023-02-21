@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -77,6 +79,18 @@ public class FeignLoggerWithoutExtraHeaders extends feign.Logger {
         return response.toBuilder().body(bodyData).build();
     }
 
+    @Override
+    protected IOException logIOException(String configKey, Level logLevel, IOException ioe, long elapsedTime) {
+        log(configKey, "<--- ERROR {}: {} ({}ms)", ioe.getClass().getSimpleName(), ioe.getMessage(), elapsedTime);
+        if (logLevel.ordinal() >= Level.FULL.ordinal()) {
+            StringWriter sw = new StringWriter();
+            ioe.printStackTrace(new PrintWriter(sw));
+            log(configKey, "{}", sw);
+            log(configKey, "<--- END ERROR");
+        }
+        return ioe;
+    }
+
     private void logPrintableHeadersOnly(String configKey, String prefix, Map<String, Collection<String>> headers) {
         final var headersString = new StringBuilder();
         for (String field : headers.keySet())
@@ -99,6 +113,6 @@ public class FeignLoggerWithoutExtraHeaders extends feign.Logger {
     }
 
     private String extractMethodTag(String configKey) {
-        return '[' + configKey.substring(0, configKey.indexOf('(')).split("#")[1] + "] ";
+        return "[🌐 " + configKey.substring(0, configKey.indexOf('(')).split("#")[1] + "] ";
     }
 }
