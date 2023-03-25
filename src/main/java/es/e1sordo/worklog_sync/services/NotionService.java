@@ -31,6 +31,7 @@ public class NotionService {
         final List<WorklogToAdd> worklogs = all.getResults().stream()
                 .map(result -> new WorklogToAdd(
                         result.getId(),
+                        result.getJiraProject(),
                         result.getJiraTaskId(),
                         result.getComment(),
                         LocalDate.parse(result.getDate()),

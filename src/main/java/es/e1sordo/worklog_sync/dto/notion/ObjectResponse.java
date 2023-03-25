@@ -10,6 +10,7 @@ import static java.util.Optional.ofNullable;
 public class ObjectResponse {
 
     private String id;
+    private String jiraProject;
 
     private int jiraTaskId;
 
@@ -26,6 +27,7 @@ public class ObjectResponse {
         this.id = body.get("id").asText();
 
         var properties = body.get("properties");
+        this.jiraProject = properties.get("Jira Project").get("select").get("name").asText(null);
         this.jiraTaskId = properties.get("Jira Task #").get("number").asInt(-1);
         this.hoursSpent = properties.get("⏰ (hrs.)").get("number").asDouble(-1.0);
         this.date = properties.get("Date").get("date").get("start").asText();

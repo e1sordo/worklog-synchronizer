@@ -3,7 +3,6 @@ jira:
   path: /rest/api
   login: ${JIRA_LOGIN}
   password: ${JIRA_PASSWORD}
-  project: ${JIRA_PROJECT}
 
 notion:
   url: https://api.notion.com

@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import static io.micrometer.common.util.StringUtils.isBlank;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -22,9 +24,6 @@ public class JiraService {
     @Value("${jira.login}")
     private String myLogin;
 
-    @Value("${jira.project}")
-    private String project;
-
     public String postWorklog(WorklogToAdd worklogToAdd) {
         log.info("--> Starting to proceed worklog: {}", worklogToAdd);
 
@@ -34,7 +33,12 @@ public class JiraService {
             return null;
         }
 
-        var issueKey = ((null == project) ? "" : project + "-") + worklogToAdd.issueId();
+        if (isBlank(worklogToAdd.projectCode())) {
+            log.warn("[{}] Mandatory field 'Jira Project' was not specified. System couldn't proceed", worklogToAdd.issueId());
+            return null;
+        }
+
+        var issueKey = worklogToAdd.projectCode() + "-" + worklogToAdd.issueId();
 
         if (worklogToAdd.minutesSpent() <= 0) {
             log.warn("[{}] Mandatory field 'Spent Time' was not specified. System couldn't proceed", issueKey);

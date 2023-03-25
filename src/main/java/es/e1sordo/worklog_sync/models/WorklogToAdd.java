@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public record WorklogToAdd(String dbEntityId,
+                           String projectCode,
                            int issueId,
                            String comment,
                            LocalDate day,
@@ -17,8 +18,8 @@ public record WorklogToAdd(String dbEntityId,
 
     @Override
     public String toString() {
-        return "(Jira: %s, comment: %s, day: %s, startTime: %s, minutes: %d, entityId: %s)".formatted(
-                issueId, comment, day, localStartTime, minutesSpent, dbEntityId
+        return "(Jira: %s-%s, comment: %s, day: %s, startTime: %s, minutes: %d, entityId: %s)".formatted(
+                projectCode, issueId, comment, day, localStartTime, minutesSpent, dbEntityId
         );
     }
 }
